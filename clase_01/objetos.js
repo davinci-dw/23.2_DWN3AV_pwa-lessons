@@ -7,8 +7,14 @@ const sergio = {
     },
     setFirstName: function (newFirstName){
         this.firstName = newFirstName;
+    },
+    getLastName: function () {
+        return this.lastName;
+    },
+    getName: function () {
+        return this.getFirstName() + " " + this.getLastName();
     }
 }
 
 sergio.setFirstName("Sergio Daniel");
-console.log(sergio.getFirstName());
+console.log(sergio.getName());
