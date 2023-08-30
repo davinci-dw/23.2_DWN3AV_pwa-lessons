@@ -1,0 +1,20 @@
+.container {
+    max-width: 90rem;
+    margin: auto;
+    background: #7fffca;
+}
+
+.content {
+    display: flex;
+    align-items: center;
+    min-height: 100vw;
+    justify-content: center;
+}
+
+.card {
+    background: #f0feff;
+    border-radius: 2rem;
+    border: 1px solid #000;
+    padding: 0.5rem 1rem;
+    box-shadow: 1px 1px 1px #000000;
+}
