@@ -3,7 +3,9 @@ class Serie {
     year = '';
     imageUrl = '';
 
-    constructor() {
+    constructor(title, year) {
+        this.setYear(year);
+        this.setTitle(title);
     }
 
     setTitle(title) {

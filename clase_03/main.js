@@ -1,7 +1,5 @@
 const serieManager = new SeriesApp();
 
-serieManager.addSerie(new Serie());
+serieManager.addSerie(new Serie("Spiderman", "1930"));
+serieManager.addSerie(new Serie("Capitán américa", "2023"));
 
-const primerSerie = serieManager.getSeries()[0];
-primerSerie.setYear(2023);
-console.log(primerSerie.getYear());
