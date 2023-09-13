@@ -63,6 +63,10 @@ const peopleList = [
 
 const valid = true;
 
+const generateName = (people) => {
+    return `${people.title} ${people.firstName} ${people.lastName}`
+};
+
 const peoplePromise = new Promise((done, reject) => {
     setTimeout(() => {
         if(valid) {
