@@ -67,6 +67,14 @@ const generateName = (people) => {
     return `${people.title} ${people.firstName} ${people.lastName}`
 };
 
+const generatePerson = (person) => {
+    const {age, ...other} = person;
+    return {
+        age,
+        name: generateName(other)
+    }
+}
+
 const peoplePromise = new Promise((done, reject) => {
     setTimeout(() => {
         if(valid) {
@@ -74,8 +82,9 @@ const peoplePromise = new Promise((done, reject) => {
         } else {
             reject({message: 'invalid request'});
         }
-    }, 5000);
+    }, 1000);
 })
 
 peoplePromise
+    .then((people) => people.map(generatePerson))
     .then((people) => console.log(people));
