@@ -76,7 +76,7 @@ const generatePerson = (person) => {
 }
 
 const getPeopleFromAPI = () => {
-    fetch("https://randomuser.me/api/?results=10")
+    return fetch("https://randomuser.me/api/?results=10")
         .then(something => something.json())
         .then(({results}) => results)
         .then(results => results.map((person) => {
@@ -92,7 +92,6 @@ const getPeopleFromAPI = () => {
                 title: name.title
             }
         }))
-        .then(data => console.log(data));
 }
 
 const peoplePromise = new Promise((done, reject) => {
@@ -104,7 +103,7 @@ const peoplePromise = new Promise((done, reject) => {
         }
     }, 1000);
 })
-peoplePromise
+getPeopleFromAPI()
     .then((people) => people.map(generatePerson))
     .catch((error) => {
         console.error(error)
@@ -116,6 +115,4 @@ peoplePromise
             message: error
         }]
     })
-    //.then((people) => console.log(people));
-
-getPeopleFromAPI();
+    .then((people) => console.log(people));
