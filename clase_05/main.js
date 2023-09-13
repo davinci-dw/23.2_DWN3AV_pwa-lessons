@@ -78,6 +78,11 @@ const generatePerson = (person) => {
 const getPeopleFromAPI = () => {
     fetch("https://randomuser.me/api/?results=10")
         .then(something => something.json())
+        .then(({results}) => results)
+        .then(results => results.map((person) => {
+            const {name, dob} = person;
+            return {name, dob}
+        }))
         .then(data => console.log(data));
 }
 
