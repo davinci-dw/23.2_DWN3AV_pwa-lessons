@@ -61,7 +61,7 @@ const peopleList = [
     }
 ];
 
-const valid = true;
+const valid = false;
 
 const generateName = (people) => {
     return `${people.title} ${people.firstName} ${people.lastName}`
@@ -87,4 +87,14 @@ const peoplePromise = new Promise((done, reject) => {
 
 peoplePromise
     .then((people) => people.map(generatePerson))
+    .catch((error) => {
+        console.error(error)
+        return [{
+            firstName: 'Generic',
+            lastName: 'User',
+            title: 'Mr.',
+            age: 19,
+            message: error
+        }]
+    })
     .then((people) => console.log(people));
