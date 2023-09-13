@@ -83,6 +83,15 @@ const getPeopleFromAPI = () => {
             const {name, dob} = person;
             return {name, dob}
         }))
+        .then(results => results.map((person) => {
+            const {dob, name} = person;
+            return {
+                age: dob.age,
+                firstName: name.first,
+                lastName: name.last,
+                title: name.title
+            }
+        }))
         .then(data => console.log(data));
 }
 
