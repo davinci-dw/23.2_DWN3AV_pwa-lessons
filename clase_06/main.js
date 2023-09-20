@@ -10,8 +10,8 @@ const generatePerson = (person) => {
     }
 }
 
-const getPeopleFromAPI = () => {
-    return fetch("https://reqres.in/api/users?page=2")
+const getPeopleFromAPI = (endpoint) => {
+    return fetch(`https://reqres.in/api/${endpoint}`)
         .then(something => something.json())
         .then(({data}) => data)
         .then(results => results.map((person) => {
@@ -58,26 +58,18 @@ const createCard = ({name, avatar, email}) => `
 `;
 
 const pageContent = document.getElementById('content');
-getPeopleFromAPI()
-    /*.then((people) => people.map(generatePerson))
-    .catch((error) => {
-        console.error(error)
-        return [{
-            firstName: 'Generic',
-            lastName: 'User',
-            title: 'Mr.',
-            age: 19,
-            message: error
-        }]
-    })*/
-    .then((people) => {
-        /* people :: Array<Person */
-        console.log(people)
-        /* template :: Array<String> */
-        const template = people
-            .map(person => createCard(person))
-            .join('')
 
-        pageContent.innerHTML = template;
+const renderPage = async () => {
+    const firstPagePeople = await getPeopleFromAPI('users?page=1');
+    const secondPagePeople = await getPeopleFromAPI('users?page=2');
 
-    });
+    const people = [...firstPagePeople, ...secondPagePeople];
+
+    const template = people
+        .map(person => createCard(person))
+        .join('')
+
+    pageContent.innerHTML = template;
+}
+
+renderPage();
