@@ -24,7 +24,9 @@ const getPeopleFromAPI = () => {
         }));
 }
 
-const createCard = () => `
+
+/* Person -> String */
+const createCard = (person) => `
     <div class="card">
         <div class="card-image">
             <figure class="image is-4by3">
@@ -69,4 +71,14 @@ getPeopleFromAPI()
             message: error
         }]
     })*/
-    .then((people) => console.log(people));
+    .then((people) => {
+        /* people :: Array<Person */
+        console.log(people)
+        /* template :: Array<String> */
+        const template = people
+            .map(person => createCard(person))
+            .join('')
+
+        pageContent.innerHTML = template;
+
+    });
