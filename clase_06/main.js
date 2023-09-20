@@ -11,7 +11,7 @@ const generatePerson = (person) => {
 }
 
 const getPeopleFromAPI = () => {
-    return fetch("https://reqres.in/api/users")
+    return fetch("https://reqres.in/api/users?page=2")
         .then(something => something.json())
         .then(({data}) => data)
         .then(results => results.map((person) => {
@@ -26,23 +26,23 @@ const getPeopleFromAPI = () => {
 
 
 /* Person -> String */
-const createCard = (person) => `
+const createCard = ({name, avatar, email}) => `
     <div class="card">
         <div class="card-image">
             <figure class="image is-4by3">
-                <img src="https://bulma.io/images/placeholders/1280x960.png" alt="Placeholder image">
+                <img src="${avatar}" alt="Placeholder image">
             </figure>
         </div>
         <div class="card-content">
             <div class="media">
                 <div class="media-left">
                     <figure class="image is-48x48">
-                        <img src="https://bulma.io/images/placeholders/96x96.png" alt="Placeholder image">
+                        <img src="${avatar}" alt="Placeholder image">
                     </figure>
                 </div>
                 <div class="media-content">
-                    <p class="title is-4">John Smith</p>
-                    <p class="subtitle is-6">@johnsmith</p>
+                    <p class="title is-4">${name}</p>
+                    <p class="subtitle is-6">${email}</p>
                 </div>
             </div>
 
@@ -58,7 +58,6 @@ const createCard = (person) => `
 `;
 
 const pageContent = document.getElementById('content');
-pageContent.innerHTML = createCard();
 getPeopleFromAPI()
     /*.then((people) => people.map(generatePerson))
     .catch((error) => {
