@@ -62,6 +62,11 @@ const renderPage = async () => {
     pageContent.innerHTML = template; //add to DOM
 }
 
+const modal = document.querySelector('.modal');
+
+modal.querySelector('.delete').addEventListener('click', () => {
+    modal.classList.remove('is-active');
+});
 const render = async () => {
     await renderPage(); //Promise
 
@@ -71,7 +76,8 @@ const render = async () => {
         card.addEventListener('click', async (event) => {
             const id = +event.currentTarget.getAttribute('person-id');
             const person = await getPersonFromAPI(id);
-            console.log(person);
+            console.log(person, modal);
+            modal.classList.add('is-active');
         });
     });
 }
