@@ -50,12 +50,24 @@ const renderPage = async () => {
     const secondPagePeople = await getPeopleFromAPI('users?page=2');
 
     const people = [...firstPagePeople, ...secondPagePeople];
-    
     const template = people
         .map(person => createCard(person))
         .join('')
-
-    pageContent.innerHTML = template;
+    pageContent.innerHTML = template; //add to DOM
 }
 
-renderPage();
+const render = async () => {
+    await renderPage(); //Promise
+
+    const cards = document.querySelectorAll('.card');
+
+    cards.forEach(card => {
+        card.addEventListener('click', (event) => {
+            const id = +event.currentTarget.getAttribute('person-id');
+            console.log(id);
+        });
+    });
+}
+
+
+render();
