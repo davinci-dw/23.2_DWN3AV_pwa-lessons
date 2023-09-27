@@ -51,6 +51,14 @@ const createCard = ({name, avatar, id}) => `
 
 const pageContent = document.getElementById('content');
 
+const renderModal = (person) => {
+    const {first_name, email} = person;
+    const titleName = modal.querySelector('.modal-card-title');
+    const emailElement = modal.querySelector('.modal-card-body-email');
+    titleName.innerHTML = first_name;
+    emailElement.innerHTML = email;
+}
+
 const renderPage = async () => {
     const firstPagePeople = await getPeopleFromAPI('users?page=1');
     const secondPagePeople = await getPeopleFromAPI('users?page=2');
@@ -76,8 +84,8 @@ const render = async () => {
         card.addEventListener('click', async (event) => {
             const id = +event.currentTarget.getAttribute('person-id');
             const person = await getPersonFromAPI(id);
-            console.log(person, modal);
             modal.classList.add('is-active');
+            renderModal(person);
         });
     });
 }
