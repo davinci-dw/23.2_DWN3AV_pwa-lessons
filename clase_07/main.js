@@ -15,19 +15,19 @@ const getPeopleFromAPI = (endpoint) => {
         .then(something => something.json())
         .then(({data}) => data)
         .then(results => results.map((person) => {
-            const {email, avatar, ...rest} = person;
+            const {id, avatar, ...rest} = person;
             return {
                 name: generateName(rest),
-                email,
-                avatar
+                avatar,
+                id
             }
         }));
 }
 
 
 /* Person -> String */
-const createCard = ({name, avatar, email}) => `
-    <div class="card">
+const createCard = ({name, avatar, id}) => `
+    <div class="card" person-id="${id}">
         <div class="card-content">
             <div class="media">
                 <div class="media-left">
@@ -50,7 +50,7 @@ const renderPage = async () => {
     const secondPagePeople = await getPeopleFromAPI('users?page=2');
 
     const people = [...firstPagePeople, ...secondPagePeople];
-
+    
     const template = people
         .map(person => createCard(person))
         .join('')
