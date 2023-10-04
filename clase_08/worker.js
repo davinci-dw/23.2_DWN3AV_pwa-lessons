@@ -23,7 +23,7 @@ self.addEventListener("message", (e) => {
                 status: "ok",
                 message: "animal found"
             });
-        }, 3000);
+        }, 2000);
     } else {
         self.postMessage({
             status: "error",
