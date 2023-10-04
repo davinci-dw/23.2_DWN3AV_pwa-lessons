@@ -1,14 +1,16 @@
 console.log("esta funcionando");
 
-const myWorker = new Worker("worker.js");
+if("serviceWorker" in navigator) {
+    navigator.serviceWorker.register("./sw.js")
+    .then((registration) => {
+        console.log("service worker registrado");
+    })
+    .catch((error) => {
+        console.log("service worker no registrado");
+    });
+}
 
 const card_button = document.getElementById("card_button");
 card_button.addEventListener("click", () => {
     console.log("tarjeta clickeada");
-    myWorker.postMessage("perro");
-});
-
-myWorker.addEventListener("message", (e) => {
-    console.log("mensaje recibido desde worker.js");
-    console.log(e.data);
 });
