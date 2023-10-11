@@ -10,10 +10,14 @@
 <body>
 
     <div id="app">
-        <div v-for="pokemon in pokemons">
-            <h1>{{pokemon.name}}</h1>
-            <p>{{pokemon.url}}</p>
-            <button @click="(e)=>{verPokemon(pokemon.url)}">Obtener info</button>
+        <div class="row">
+            <div class="card col col-4" v-for="pokemon in pokemons">
+                <div class="card-body">
+                    <h5 class="card-title">{{pokemon.name}}</h5>
+                    <p class="card-text">{{pokemon.url}}</p>
+                    <button @click="(e)=>{verPokemon(pokemon.url)}">Obtener info</button>
+                </div>
+            </div>
         </div>
     </div>
     <script src="main.js"></script>
