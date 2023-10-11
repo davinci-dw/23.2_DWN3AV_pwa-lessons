@@ -1,10 +1,17 @@
 const app = new Vue({
         el: '#app',
         data: {
+            estadoModal: false,
             titulo: 'Hola mundo con Vue',
             pokemons: []
         },
         methods: {
+            mostrarModal() {
+                this.estadoModal = true;
+            },
+            ocultarModal() {
+                this.estadoModal = false;
+            },
             verPokemon(url) {
                fetch(url)
                 .then(response => response.json())
@@ -12,6 +19,7 @@ const app = new Vue({
                     const {weight, sprites} = data;
                     const {front_shiny} = sprites;
                     console.log(`Nombre: ${front_shiny} - Peso: ${weight}`);
+                    this.mostrarModal();
                 });
             }
         },
