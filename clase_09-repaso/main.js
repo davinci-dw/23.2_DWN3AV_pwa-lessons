@@ -24,6 +24,19 @@ const app = new Vue({
                 }
                 localStorage.setItem("historial", JSON.stringify(this.historial));
             },
+            obtenerPokemonLocal(url) {
+                const historial = JSON.parse(localStorage.getItem("historial"));
+                if(historial) {
+                    const pokemon = historial.find(pokemon => pokemon.url === url);
+                    if(pokemon) {
+                        return pokemon;
+                    } else {
+                        return;
+                    }
+                } else {
+                    return;
+                }
+            },
             obtenerListaLocal() {
                 const pokemons = localStorage.getItem("pokemons");
                 if (pokemons) {
@@ -37,15 +50,21 @@ const app = new Vue({
                 this.estadoModal = false;
             },
             verPokemon(url) {
-               fetch(url)
-                .then(jsonConverter)
-                .then(async data => {
-                    const {weight, sprites} = data;
-                    const {front_shiny} = sprites;
-                    this.pokemonActual = {weight, front_shiny};
-                    this.guardarPokemonLocal(this.pokemonActual, url);
+                const pokemon = this.obtenerPokemonLocal(url);
+                if(pokemon) {
+                    this.pokemonActual = pokemon;
                     this.mostrarModal();
-                });
+                } else {
+                   fetch(url)
+                    .then(jsonConverter)
+                    .then(async data => {
+                        const {weight, sprites} = data;
+                        const {front_shiny} = sprites;
+                        this.pokemonActual = {weight, front_shiny};
+                        this.guardarPokemonLocal(this.pokemonActual, url);
+                        this.mostrarModal();
+                    });
+                }
             }
         },
         async mounted() {
