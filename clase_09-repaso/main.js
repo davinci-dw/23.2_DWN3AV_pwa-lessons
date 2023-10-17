@@ -6,11 +6,23 @@ const app = new Vue({
             estadoModal: false,
             pokemonActual: null,
             titulo: 'Hola mundo con Vue',
-            pokemons: []
+            pokemons: [],
+            historial: []
         },
         methods: {
             guardarListaLocal() {
                 localStorage.setItem("pokemons", JSON.stringify(this.pokemons));
+            },
+            guardarPokemonLocal(data, url) {
+                const pokemon = {...data, url};
+                const historial = JSON.parse(localStorage.getItem("historial"));
+                if (historial) {
+                    historial.push(pokemon);
+                    this.historial = historial;
+                } else {
+                    this.historial.push(pokemon);
+                }
+                localStorage.setItem("historial", JSON.stringify(this.historial));
             },
             obtenerListaLocal() {
                 const pokemons = localStorage.getItem("pokemons");
@@ -31,6 +43,7 @@ const app = new Vue({
                     const {weight, sprites} = data;
                     const {front_shiny} = sprites;
                     this.pokemonActual = {weight, front_shiny};
+                    this.guardarPokemonLocal(this.pokemonActual, url);
                     this.mostrarModal();
                 });
             }
