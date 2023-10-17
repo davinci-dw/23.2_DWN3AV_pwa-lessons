@@ -39,8 +39,12 @@ const app = new Vue({
             },
             obtenerListaLocal() {
                 const pokemons = localStorage.getItem("pokemons");
+                const historia = localStorage.getItem("historial");
                 if (pokemons) {
                     this.pokemons = JSON.parse(pokemons);
+                }
+                if (historia) {
+                    this.historial = JSON.parse(historia);
                 }
             },
             mostrarModal() {
