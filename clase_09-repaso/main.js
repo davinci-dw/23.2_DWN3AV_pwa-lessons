@@ -12,6 +12,12 @@ const app = new Vue({
             guardarListaLocal() {
                 localStorage.setItem("pokemons", JSON.stringify(this.pokemons));
             },
+            obtenerListaLocal() {
+                const pokemons = localStorage.getItem("pokemons");
+                if (pokemons) {
+                    this.pokemons = JSON.parse(pokemons);
+                }
+            },
             mostrarModal() {
                 this.estadoModal = true;
             },
@@ -30,10 +36,13 @@ const app = new Vue({
             }
         },
         async mounted() {
-            const response = await fetch("https://pokeapi.co/api/v2/pokemon/?limit=5&offset=0");
-            const data = await response.json();
-            this.pokemons = data.results;
-            this.guardarListaLocal();
+            this.obtenerListaLocal();
+            if(this.pokemons.length === 0) {
+                const response = await fetch("https://pokeapi.co/api/v2/pokemon/?limit=5&offset=0");
+                const data = await response.json();
+                this.pokemons = data.results;
+                this.guardarListaLocal();
+            }
         }
     }
 );
