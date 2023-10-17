@@ -9,6 +9,9 @@ const app = new Vue({
             pokemons: []
         },
         methods: {
+            guardarListaLocal() {
+                localStorage.setItem("pokemons", JSON.stringify(this.pokemons));
+            },
             mostrarModal() {
                 this.estadoModal = true;
             },
@@ -30,6 +33,7 @@ const app = new Vue({
             const response = await fetch("https://pokeapi.co/api/v2/pokemon/?limit=5&offset=0");
             const data = await response.json();
             this.pokemons = data.results;
+            this.guardarListaLocal();
         }
     }
 );
