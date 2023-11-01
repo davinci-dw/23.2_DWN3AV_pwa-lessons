@@ -30,8 +30,22 @@ self.addEventListener("message", (e) => {
 
 self.addEventListener("install", (e) => {
     console.log("install");
+    caches.open("mi-cache-1").then((cache) => {
+        cache.addAll([
+            '/',
+            '/main.js'
+        ]);
+    });
 });
 
 self.addEventListener("fetch", (e) => {
    console.log("fetch trigger", e.request.url);
+   caches.has("mi-cache-1")
+   .then(respuesta => {
+       caches.open("mi-cache-1").then(cache => {
+           cache.match("main.js").then(respuesta => {
+               console.log("archivo cacheado", respuesta);
+           })
+       });
+   });
 });
