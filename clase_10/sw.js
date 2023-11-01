@@ -5,8 +5,6 @@ const animales = [
     "pez",
     "tortuga",
     "conejo",
-    "hamster",
-    "loro",
     "gallina",
     "caballo",
     "vaca"
@@ -28,4 +26,8 @@ self.addEventListener("message", (e) => {
             message: "animal not found"
         });
     }
+});
+
+self.addEventListener("install", (e) => {
+    console.log("install");
 });
