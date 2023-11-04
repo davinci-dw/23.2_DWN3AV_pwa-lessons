@@ -45,8 +45,18 @@ self.addEventListener("install", (e) => {
 self.addEventListener("fetch", (e) => {
     const url = e.request.url;
     console.log(url);
-    if(url.includes("warning-default.png")) {
-        e.respondWith(new Promise((resolve, reject) => resolve({})));
+    if(url.includes("warning-default.png")) { // intercepto imagen
+        e.respondWith( // reemplazo la respuesta
+            fetch(url) //consulto por la info de la imagen
+            .then(respuesta => {
+                console.log("interceptando imagen", respuesta.status)
+                if(respuesta.status === 404) {
+                    return fetch('https://placehold.co/600x400');
+                } else {
+                    return respuesta;
+                }
+            })
+        );
     }
    //console.log("fetch trigger", e.request.url);
    //caches.has("mi-cache-1")
