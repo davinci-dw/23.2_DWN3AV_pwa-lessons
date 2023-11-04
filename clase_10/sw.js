@@ -43,13 +43,18 @@ self.addEventListener("install", (e) => {
 });
 
 self.addEventListener("fetch", (e) => {
-   console.log("fetch trigger", e.request.url);
-   caches.has("mi-cache-1")
-   .then(respuesta => {
+    const url = e.request.url;
+    console.log(url);
+    if(url.includes("warning-default.png")) {
+        e.respondWith(new Promise((resolve, reject) => resolve({})));
+    }
+   //console.log("fetch trigger", e.request.url);
+   //caches.has("mi-cache-1")
+   //.then(respuesta => {
        /*caches.open("mi-cache-1").then(cache => {
            cache.match("main.js").then(respuesta => {
                console.log("archivo cacheado", respuesta);
            })
        });*/
-   });
+   //});
 });
