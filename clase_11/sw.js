@@ -40,18 +40,32 @@ self.addEventListener("install", (e) => {
             '/images/warning.png',
             'https://cdn.jsdelivr.net/npm/vue@2.7.14/dist/vue.js',
             'https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css',
-            'https://pokeapi.co/api/v2/pokemon/?limit=5&offset=0',
             '/main.js'
         ]);
     });
     e.waitUntil(cache);
 });
 
-self.addEventListener("fetch", (e) => {
+self.addEventListener("fetch-cache-only", (e) => {
     const url = e.request.url;
     console.log(url);
 
     const cacheResponse = caches.match(e.request);
+
+    e.respondWith(cacheResponse);
+
+});
+
+self.addEventListener("fetch", (e) => {
+    const url = e.request.url;
+    console.log(url);
+
+    const cacheResponse = caches.match(e.request).then(response => {
+        if(!response) {
+            return fetch(e.request);
+        }
+        return response;
+    });
 
     e.respondWith(cacheResponse);
 
