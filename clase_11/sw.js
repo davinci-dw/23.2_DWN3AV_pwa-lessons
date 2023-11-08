@@ -56,7 +56,7 @@ self.addEventListener("fetch-cache-only", (e) => {
 
 });
 
-self.addEventListener("fetch", (e) => {
+self.addEventListener("fetch-and-network", (e) => {
     const url = e.request.url;
     console.log(url);
 
@@ -68,5 +68,23 @@ self.addEventListener("fetch", (e) => {
     });
 
     e.respondWith(cacheResponse);
+
+});
+
+self.addEventListener("fetch", (e) => {
+    const url = e.request.url;
+    console.log(url);
+    const response =
+        fetch(e.request)
+            .then((res) => {
+              return caches.open('mi-cache-2').then(cache => {
+                  cache.put(e.request, res.clone());
+                  return res;
+              })
+            })
+            .catch((err) => {
+                return caches.match(e.request);
+            })
+    e.respondWith(response);
 
 });
