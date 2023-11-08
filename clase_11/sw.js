@@ -34,37 +34,25 @@ self.addEventListener("message", (e) => {
 
 self.addEventListener("install", (e) => {
     console.log("install");
-    caches.open("mi-cache-2").then((cache) => {
+    const cache = caches.open("mi-cache-2").then((cache) => {
         cache.addAll([
             '/',
+            '/images/warning.png',
+            'https://cdn.jsdelivr.net/npm/vue@2.7.14/dist/vue.js',
+            'https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css',
+            'https://pokeapi.co/api/v2/pokemon/?limit=5&offset=0',
             '/main.js'
         ]);
     });
+    e.waitUntil(cache);
 });
 
 self.addEventListener("fetch", (e) => {
     const url = e.request.url;
     console.log(url);
-    if(url.includes("warning-default.png")) { // intercepto imagen
-        e.respondWith( // reemplazo la respuesta
-            fetch(url) //consulto por la info de la imagen
-            .then(respuesta => {
-                console.log("interceptando imagen", respuesta.status)
-                if(respuesta.status === 404) {
-                    return fetch('https://placehold.co/600x400');
-                } else {
-                    return respuesta;
-                }
-            })
-        );
-    }
-   //console.log("fetch trigger", e.request.url);
-   //caches.has("mi-cache-1")
-   //.then(respuesta => {
-       /*caches.open("mi-cache-1").then(cache => {
-           cache.match("main.js").then(respuesta => {
-               console.log("archivo cacheado", respuesta);
-           })
-       });*/
-   //});
+
+    const cacheResponse = caches.match(e.request);
+
+    e.respondWith(cacheResponse);
+
 });
