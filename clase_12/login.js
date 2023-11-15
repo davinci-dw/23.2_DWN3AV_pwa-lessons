@@ -32,7 +32,16 @@ const application = new Vue({
         },
         methods: {
             login() {
-                console.log(this.email, this.password)
+                signInWithEmailAndPassword(auth, this.email, this.password)
+                    .then(userCredential => {
+                        window.location.replace("/");
+                    })
+                    .catch(error => {
+                        const errorCode = error.code;
+                        const errorMessage = error.message;
+
+                        alert(errorMessage);
+                    })
             }
         }
     }
