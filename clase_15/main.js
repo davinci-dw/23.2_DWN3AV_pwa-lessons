@@ -41,6 +41,7 @@ if(false && "serviceWorker" in navigator) {
 const application = new Vue({
         el: '#app',
         data: {
+            instalacionPendiente: true,
             eventoDeInstalacion: null,
             estadoModal: false,
             pokemonActual: null,
@@ -54,7 +55,7 @@ const application = new Vue({
                     this.eventoDeInstalacion.prompt()
                         .then(({outcome}) => {
                             if(outcome === "accepted") {
-                                console.log("se instaló");
+                                this.instalacionPendiente = false;
                             } else {
                                 console.log("no se instaló");
                             }
