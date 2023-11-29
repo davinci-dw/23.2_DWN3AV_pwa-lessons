@@ -84,8 +84,12 @@ const application = new Vue({
         mounted() {
             window.addEventListener("beforeinstallprompt", (event) => {
                 this.eventoDeInstalacion = event;
-                console.log("evento de instalación");
+                this.instalacionPendiente = true;
             });
+
+            if(this.eventoDeInstalacion == null) {
+                this.instalacionPendiente = false;
+            }
 
             onAuthStateChanged(auth, async (user) => {
                 if (user) {
