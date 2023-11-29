@@ -49,6 +49,20 @@ const application = new Vue({
             nombre_usuario: ''
         },
         methods: {
+            instalarAplicacion() {
+                if(this.eventoDeInstalacion != null) {
+                    this.eventoDeInstalacion.prompt()
+                        .then(({outcome}) => {
+                            if(outcome === "accepted") {
+                                console.log("se instaló");
+                            } else {
+                                console.log("no se instaló");
+                            }
+                        });
+                } else {
+                    console.log("no se puede instalar");
+                }
+            },
             mostrarModal() {
                 this.estadoModal = true;
             },
